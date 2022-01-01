@@ -11,7 +11,7 @@ public class Main {
         FileImageLoader loader = new FileImageLoader(file);
         Image image = loader.load();
         
-        MainFrame mainFrame = new MainFrame();
+        MainFrame mainFrame = new MainFrame(loader);
         mainFrame.getImageDisplay().show(image);
         
     }
