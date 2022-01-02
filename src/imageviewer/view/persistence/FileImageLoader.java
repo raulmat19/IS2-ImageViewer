@@ -1,12 +1,16 @@
 package imageviewer.view.persistence;
 
+import java.util.logging.Logger;
 import imageviewer.model.Image;
+import imageviewer.model.ProxyImage;
+import imageviewer.model.RealImage;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.logging.Level;
 
 public class FileImageLoader implements ImageLoader{
     
@@ -24,23 +28,9 @@ public class FileImageLoader implements ImageLoader{
     
     @Override
     public Image load() {
-        return new Image() {
-            @Override
-            public String name() {
-                return files[current].getName();
-            }
-                
-            @Override
-            public InputStream stream() {
-                try {
-                    return new BufferedInputStream(new FileInputStream(files[current]));
-                } catch (FileNotFoundException e) {
-                    return null;
-                }
-            }
-        };
+        return new ProxyImage(this.files[this.current]);
     }
-
+    
     @Override
     public Image next() {
         if (this.current == this.files.length - 1){
